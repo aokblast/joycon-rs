@@ -82,6 +82,7 @@ mod common {
     pub enum Device {
         JoyCon,
         ProConOrChargingGrip,
+        RingCon,
     }
 
     /// Connection info
@@ -97,6 +98,7 @@ mod common {
 
         fn try_from(value: u8) -> Result<Self, Self::Error> {
             let device = match (value >> 1) & 3 {
+                1 => Device::RingCon,
                 3 => Device::JoyCon,
                 0 => Device::ProConOrChargingGrip,
                 _ => return Err(InvalidStandardInputReport::ConnectionInfo(value).into()),
